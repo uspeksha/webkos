@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\BoardingHouseRepositoryInterface;
 use App\Interfaces\CategoryRepositoryInterface;
 use App\Interfaces\CityRepositoryInterface;
-use App\Interfaces\BoardingHouseRepositoryInterface;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class BoardingHouseController extends Controller
 {
+
     private CityRepositoryInterface $cityRepository;
     private CategoryRepositoryInterface $categoryRepository;
     private BoardingHouseRepositoryInterface $boardingHouseRepository;
@@ -22,14 +23,13 @@ class HomeController extends Controller
         $this->categoryRepository = $categoryRepository;
         $this->boardingHouseRepository = $boardingHouseRepository;
     }
-
-    public function index() 
+    
+    public function find()
     {
         $categories = $this->categoryRepository->getAllCategories();
-        $popularBoardingHouses = $this->boardingHouseRepository->getPopularBoardingHouses();
         $cities = $this->cityRepository->getAllcities();
-        $boardingHouses = $this->boardingHouseRepository->getAllBoardingHouses();
-        
-        return view('pages.home', compact('categories','popularBoardingHouses','cities','boardingHouses'));
+
+
+        return view('pages.boarding-house.find',compact('categories','cities'));
     }
 }
